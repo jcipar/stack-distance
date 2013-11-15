@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <unordered_map>
 using namespace std;
 
 #include <rank-tree.hpp>
@@ -22,7 +23,7 @@ public:
     int64_t objectCount();
 private:
     RankTree _lruTree;
-    map<string, RankTreeNode*> _objectNodeMap;
+    unordered_map<string, RankTreeNode*> _objectNodeMap;
 };
 
 #endif // #ifndef __STACK_SIMULATOR_HPP__
