@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 
@@ -6,11 +5,11 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-    StackSimulator simulator;
-    while (not cin.eof()) {
+	StackSimulator simulator;
+	while (not cin.eof()) {
 		string s;
 		cin >> s;
 		cout << simulator.Reference(s) << endl;
-    }
-    return 0;
+	}
+	return 0;
 }
