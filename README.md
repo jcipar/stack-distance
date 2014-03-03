@@ -1,7 +1,10 @@
 stack-distance
 ==============
 
-Utility to simulate cache behavior with Mattson's Stack Algorithm.
+Utility to simulate cache behavior with Mattson's Stack Algorithm. This is
+something I've had to rewrite a number of times for various projects. I
+finally decided to write it and put it somewhere where I, and others, could
+reuse it.
 
 Mattson's Stack Algorithm is used to estimate the cache miss rate for a given
 workload, with *any* sized cache. Given a trace of memory/disk/object
