@@ -1,6 +1,7 @@
 #ifndef __RANK_TREE_H__
 #define __RANK_TREE_H__
 
+#define __STDC_LIMIT_MACROS
 #include <cstdint>
 #include <set>
 #include <string>

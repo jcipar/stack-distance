@@ -24,7 +24,6 @@ int main(void) {
     test(simulator.objectCount() == 2);
     test(simulator.Reference("world") == 1);
     simulator.check();
-    
 
     return 0;
 }

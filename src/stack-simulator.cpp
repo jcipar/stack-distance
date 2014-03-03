@@ -11,14 +11,14 @@ using namespace std;
 
 int64_t StackSimulator::Reference(string key) {
     if (_objectNodeMap.count(key) == 0) {
-	_objectNodeMap[key] = _lruTree.Insert(key);
-	return INT64_MAX;
+		_objectNodeMap[key] = _lruTree.Insert(key);
+		return INT64_MAX;
     } else {
-	auto node = _objectNodeMap[key];
-	int64_t rank = node->Rank();
-	_lruTree.Remove(node);
-	_lruTree.InsertNode(node);
-	return rank;
+		auto node = _objectNodeMap[key];
+		int64_t rank = node->Rank();
+		_lruTree.Remove(node);
+		_lruTree.InsertNode(node);
+		return rank;
     }
 }
 

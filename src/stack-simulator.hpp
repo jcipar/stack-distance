@@ -1,6 +1,7 @@
 #ifndef __STACK_SIMULATOR_HPP__
 #define __STACK_SIMULATOR_HPP__
 
+#define __STDC_LIMIT_MACROS
 #include <cstdint>
 #include <map>
 #include <string>
@@ -21,6 +22,7 @@ public:
     // objectCount() returns the total number of objects in the
     // simulator.
     int64_t objectCount();
+
 private:
     RankTree _lruTree;
     unordered_map<string, RankTreeNode*> _objectNodeMap;
