@@ -9,6 +9,7 @@ using namespace std;
 void randomizedTest();
 
 int main(void) {
+	srand(int(time(NULL)));
 	StackSimulator simulator;
 
 	test(simulator.Reference("hello") == INT64_MAX);

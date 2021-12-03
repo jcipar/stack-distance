@@ -68,8 +68,8 @@ int64_t RankTreeNode::checkWeights() {
 }
 
 
-void RankTreeNode::checkPriorities(int priority) {
-	assert(_priority <= priority);
+void RankTreeNode::checkPriorities(int parentPriority) {
+	assert(_priority <= parentPriority);
 	if (_left != nullptr) {
 		_left->checkPriorities(_priority);
 	}
@@ -103,7 +103,16 @@ void RankTreeNode::checkUniqueness(std::set<RankTreeNode*>& ptrs) {
 	assert(ptrs.size() == start_weight + _weight);
 }
 
-
+// This does not need to fix up weights along the
+// way because it is used in two limited ways:
+// 1. During an Insert, we always insert at the
+//    leftmost postion, so there is never a left
+//    child. After promoting the node, A's counts
+//    will be correct. Only the new node and its
+//    ancestors will have incorrect counts.
+// 2. During an unlink call, we call, every node
+//    with incorrect counts will be an ancestor
+//    of the to-be-deleted node.
 void RankTreeNode::promote() {
 	assert(_parent != nullptr);
 	auto A = _parent;
@@ -187,7 +196,8 @@ RankTreeNode* RankTreeNode::makeLeaf() {
 
 
 bool RankTreeNode::fixPriority() {
-	while(_parent != nullptr and _parent->_priority < _priority) {
+	while(_parent != nullptr
+		  and _parent->_priority < _priority) {
 		promote();
 	}
 	if (_parent == nullptr) {
