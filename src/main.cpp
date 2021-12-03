@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 		if (weights) {
 			cin >> weight;
 		}
-		cout << simulator.Reference(s) << endl;
+		cout << simulator.Reference(s, weight) << endl;
 	}
 	return 0;
 }
