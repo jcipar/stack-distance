@@ -58,7 +58,7 @@ class RankTreeNode;
   	~RankTreeNode();
   private:
   	string _name;
-  	int64_t _weight;
+  	int64_t _subtreeWeight;
   	int _priority;
 
   	RankTreeNode* _left;

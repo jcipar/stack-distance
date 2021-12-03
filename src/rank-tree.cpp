@@ -6,7 +6,7 @@
 
 RankTreeNode::RankTreeNode(string name) {
 	_name = name;
-	_weight = 0;
+	_subtreeWeight = 0;
 	_priority = rand();
 	_left = nullptr;
 	_right = nullptr;
@@ -29,7 +29,7 @@ void RankTreeNode::print(int level) {
 		cout << "  ";
 	}
 	cout << _name 
-	<< " " << _weight 
+	<< " " << _subtreeWeight
 	<< " " << _priority 
 	<< " " << Rank()
 	<< endl;
@@ -63,8 +63,8 @@ int64_t RankTreeNode::checkWeights() {
 	if (_right != nullptr) {
 		rightWeight = _right->checkWeights();
 	}
-	assert(_weight == 1 + leftWeight + rightWeight);
-	return _weight;
+	assert(_subtreeWeight == 1 + leftWeight + rightWeight);
+	return _subtreeWeight;
 }
 
 
@@ -100,7 +100,7 @@ void RankTreeNode::checkUniqueness(std::set<RankTreeNode*>& ptrs) {
 	if (_right != nullptr) {
 		_right->checkUniqueness(ptrs);
 	}
-	assert(ptrs.size() == start_weight + _weight);
+	assert(ptrs.size() == start_weight + _subtreeWeight);
 }
 
 // This does not need to fix up weights along the
@@ -302,7 +302,7 @@ bool RankTreeNode::rightChild() {
 
 int64_t RankTreeNode::leftWeight() {
 	if (_left != nullptr) {
-		return _left->_weight;
+		return _left->_subtreeWeight;
 	} else {
 		return 0;
 	}
@@ -311,7 +311,7 @@ int64_t RankTreeNode::leftWeight() {
 
 int64_t RankTreeNode::rightWeight() {
 	if (_right != nullptr) {
-		return _right->_weight;
+		return _right->_subtreeWeight;
 	} else {
 		return 0;
 	}
@@ -319,7 +319,7 @@ int64_t RankTreeNode::rightWeight() {
 
 
 void RankTreeNode::fixWeights() {
-	_weight = 1 + leftWeight() + rightWeight();
+	_subtreeWeight = 1 + leftWeight() + rightWeight();
 	if (_parent != nullptr) {
 		_parent->fixWeights();
 	}
