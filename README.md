@@ -51,6 +51,32 @@ The output of this utility can be passed to `sort -n | uniq -c` to generate a
 histogram.
 
 
+Accounting for Object size
+----
+
+The `--weight` parameter can be used to simulate objects of different sizes.
+When this parameter is used, every input is expected to be a string identifier
+followed by an integer size. The outputs are weighted by size.
+
+	a 10  # Add an object a, size 10
+	9223372036854775807  # INT64_MAX is used for new objects.
+	b 30  # Add an object b, size 30
+	9223372036854775807
+	c 15  # Add an object c, size 15
+	9223372036854775807
+	a 10  # SIZE IS REQUIRED ON EVERY REFERENCE
+	45    # Total weight of 45 since the last access to a 
+	a 10  
+	0     # A was the last reference, so it now has a distance of 0.
+	b 30  
+	25  # Even though a has appeared twice, there are only 2 *unique* references
+	    # since the last time we saw b.
+	a
+	30
+	c
+	40
+
+
 Computing miss-ratio-curve for a large social network graph
 ----
 
