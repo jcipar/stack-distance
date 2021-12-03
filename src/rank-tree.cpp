@@ -4,9 +4,10 @@
 #include <rank-tree.hpp>
 #include <set>
 
-RankTreeNode::RankTreeNode(string name) {
+RankTreeNode::RankTreeNode(string name, uint64_t weight) {
 	_name = name;
 	_subtreeWeight = 0;
+	_weight = weight;
 	_priority = rand();
 	_left = nullptr;
 	_right = nullptr;
@@ -21,6 +22,11 @@ RankTreeNode::~RankTreeNode() {
 	if (_right != nullptr) {
 		delete _right;
 	}
+}
+
+
+void RankTreeNode::setWeight(uint64_t weight) {
+	_weight = weight;
 }
 
 
@@ -63,7 +69,7 @@ int64_t RankTreeNode::checkWeights() {
 	if (_right != nullptr) {
 		rightWeight = _right->checkWeights();
 	}
-	assert(_subtreeWeight == 1 + leftWeight + rightWeight);
+	assert(_subtreeWeight == _weight + leftWeight + rightWeight);
 	return _subtreeWeight;
 }
 
@@ -92,7 +98,6 @@ void RankTreeNode::checkParentPointers(RankTreeNode* parent) {
 
 void RankTreeNode::checkUniqueness(std::set<RankTreeNode*>& ptrs) {
 	assert(ptrs.count(this) == 0);
-	auto start_weight = ptrs.size();
 	ptrs.insert(this);
 	if (_left != nullptr) {
 		_left->checkUniqueness(ptrs);
@@ -100,7 +105,6 @@ void RankTreeNode::checkUniqueness(std::set<RankTreeNode*>& ptrs) {
 	if (_right != nullptr) {
 		_right->checkUniqueness(ptrs);
 	}
-	assert(ptrs.size() == start_weight + _subtreeWeight);
 }
 
 // This does not need to fix up weights along the
@@ -222,12 +226,12 @@ int64_t RankTreeNode::leftChildRank(int64_t rank) {
 
 int64_t RankTreeNode::rightChildRank(int64_t rank) {
 	if (root()) {
-		return 1 + rank + leftWeight();
+		return _weight + rank + leftWeight();
 	} else if (leftChild()) {
-		return _parent->leftChildRank(1 + rank + leftWeight());
+		return _parent->leftChildRank(_weight + rank + leftWeight());
 	} else {
 		assert(rightChild());
-		return _parent->rightChildRank(1 + rank + leftWeight());
+		return _parent->rightChildRank(_weight + rank + leftWeight());
 	}
 }
 
@@ -319,15 +323,15 @@ int64_t RankTreeNode::rightWeight() {
 
 
 void RankTreeNode::fixWeights() {
-	_subtreeWeight = 1 + leftWeight() + rightWeight();
+	_subtreeWeight = _weight + leftWeight() + rightWeight();
 	if (_parent != nullptr) {
 		_parent->fixWeights();
 	}
 }
 
 
-RankTreeNode* RankTree::Insert(string name) {
-	auto node = new RankTreeNode(name);
+RankTreeNode* RankTree::Insert(string name, uint64_t weight) {
+	auto node = new RankTreeNode(name, weight);
 	InsertNode(node);
 	return node;
 }
@@ -385,6 +389,17 @@ int64_t RankTree::computeSize() {
 	if (_root == nullptr) {
 		return 0;
 	} else {
-		return _root->checkWeights();
+		return _root->computeSize();
 	}
+}
+
+size_t RankTreeNode::computeSize() {
+	size_t size = 1;
+	if (_left) {
+		size += _left->computeSize();
+	}
+	if (_right) {
+		size += _right->computeSize();
+	}
+	return size;
 }

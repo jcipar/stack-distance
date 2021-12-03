@@ -53,20 +53,23 @@ class RankTreeNode;
 	// in O(lg n) time.
   	int64_t Rank();
 
+	void setWeight(uint64_t weight);
+
 	// ~RankTreeNode() deletes the node's children, recursively
 	// freeing the tree.
   	~RankTreeNode();
   private:
   	string _name;
   	int64_t _subtreeWeight;
-  	int _priority;
+  	uint64_t _weight;
+	int _priority;
 
   	RankTreeNode* _left;
   	RankTreeNode* _right;
   	RankTreeNode* _parent;
 
 	// RankTreeNode() constructs a new node with the given name.
-  	RankTreeNode(string name);
+  	RankTreeNode(string name, uint64_t weight);
 
 	bool leaf(); // leaf() indicates that this node is a leaf.
 	bool root(); // root() indicates that this node is the root.
@@ -139,6 +142,8 @@ class RankTreeNode;
 	// checkUniqueness() checks that each node only appears in the tree
 	// once.
 	void checkUniqueness(std::set<RankTreeNode*>& ptrs);
+
+	size_t computeSize();
 };
 
 
@@ -149,7 +154,7 @@ public:
 
 	// Insert() creates a new node with the given name and inserts it
 	// into the tree. O(lg n)
-	RankTreeNode* Insert(string name);
+	RankTreeNode* Insert(string name, uint64_t weight);
 
 	// InsertNode() inserts the given node into the tree. O(lg n)
 	void InsertNode(RankTreeNode* node);
@@ -179,7 +184,7 @@ public:
 	// maintained?"
 	void check();
 
-	// computeSize() computes the size of the tree by walking all
+	// computeSize() computes the total size of the tree by walking all
 	// pointers.
 	int64_t computeSize();
 

@@ -14,7 +14,7 @@ class StackSimulator {
 public:
 	// Reference() takes a string key and simulates a reference to
 	// that object, returning it's previous point in the LRU tree.
-	int64_t Reference(string key);
+	int64_t Reference(string key, uint64_t weight);
 
 	// check() verifies invariants for the data structure.
 	void check();

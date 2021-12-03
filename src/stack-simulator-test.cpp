@@ -12,19 +12,19 @@ int main(void) {
 	srand(int(time(NULL)));
 	StackSimulator simulator;
 
-	test(simulator.Reference("hello") == INT64_MAX);
+	test(simulator.Reference("hello", 1) == INT64_MAX);
 	simulator.check();
 
-	test(simulator.Reference("hello") == 0);
+	test(simulator.Reference("hello", 1) == 0);
 	simulator.check();
 	test(simulator.objectCount() == 1);
 
-	test(simulator.Reference("world") == INT64_MAX);
+	test(simulator.Reference("world", 1) == INT64_MAX);
 	simulator.check();
-	test(simulator.Reference("hello") == 1);
+	test(simulator.Reference("hello", 1) == 1);
 	simulator.check();
 	test(simulator.objectCount() == 2);
-	test(simulator.Reference("world") == 1);
+	test(simulator.Reference("world", 1) == 1);
 	simulator.check();
 
 	randomizedTest();
@@ -37,7 +37,7 @@ void randomizedTest() {
 	StackSimulator simulator;
 	for (int i = 1; i <= N; i++) {
 		string s = to_string(rand() % M);
-		simulator.Reference(s);
+		simulator.Reference(s, 1);
 		if (N % 1000 == 0) {
 			simulator.check();
 		}

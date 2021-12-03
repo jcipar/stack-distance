@@ -9,14 +9,15 @@ using namespace std;
 #include <stack-simulator.hpp>
 
 
-int64_t StackSimulator::Reference(string key) {
+int64_t StackSimulator::Reference(string key, uint64_t weight) {
 	if (_objectNodeMap.count(key) == 0) {
-		_objectNodeMap[key] = _lruTree.Insert(key);
+		_objectNodeMap[key] = _lruTree.Insert(key, weight);
 		return INT64_MAX;
 	} else {
 		auto node = _objectNodeMap[key];
 		int64_t rank = node->Rank();
 		_lruTree.Remove(node);
+		node->setWeight(weight);
 		_lruTree.InsertNode(node);
 		return rank;
 	}
