@@ -38,7 +38,7 @@ int main(void) {
 	test(hello->Rank() == 2);
 	test(world->Rank() == 1);
 	test(foo->Rank() == 0);
-	
+
 	tree.Remove(world);
 	test(tree.computeSize() == 2);
 	test(hello->Rank() == 1);
@@ -84,7 +84,7 @@ double dtime() {
 
 
 double benchmark() {
-	int64_t N = 1;
+	int64_t N = 1000000;
 	do {
 		double tt = do_benchmark(N);
 		if (tt >= 1.0) {

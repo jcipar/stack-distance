@@ -134,7 +134,7 @@ void RankTreeNode::promote() {
 			assert(GP->_right == A);
 			GP->_right = this;
 		}
-	} 
+	}
 }
 
 

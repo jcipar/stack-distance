@@ -30,4 +30,5 @@ int64_t StackSimulator::objectCount() {
 
 void StackSimulator::check() {
 	assert(_objectNodeMap.size() == _lruTree.computeSize());
+	_lruTree.check();
 }
